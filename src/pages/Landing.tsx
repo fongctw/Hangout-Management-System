@@ -6,18 +6,32 @@ import { Calendar, BookOpen, UtensilsCrossed, Sparkles } from "lucide-react";
 const Landing = () => {
   const navigate = useNavigate();
 
+  const isLoggedIn = !!localStorage.getItem('currentUser');
+
   const features = [
     {
       icon: Calendar,
       title: "Browse Events",
       description: "Look up upcoming shows and ticket prices",
-      action: () => navigate('/events'),
+      action: () => {
+        if (!isLoggedIn) {
+          navigate('/login');
+        } else {
+          navigate('/events');
+        }
+      },
     },
     {
       icon: BookOpen,
       title: "Reserve Table",
       description: "Pick a date and party size",
-      action: () => navigate('/reserve'),
+      action: () => {
+        if (!isLoggedIn) {
+          navigate('/login');
+        } else {
+          navigate('/reserve');
+        }
+      },
     },
     {
       icon: UtensilsCrossed,
@@ -62,7 +76,7 @@ const Landing = () => {
               size="lg" 
               variant="outline"
               onClick={() => navigate('/login')}
-              className="border-white text-white hover:bg-white/10"
+              className="bg-white text-primary hover:bg-white/90 shadow-lg"
             >
               Get Started
             </Button>
